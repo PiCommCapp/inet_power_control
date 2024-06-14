@@ -32,6 +32,14 @@ The system has a RPi, a 4 relay daughter board, and a power supply as all my dev
 
 This is assuming you have an operational RPi with RPiOS lite installed. The pi should also be connected to the internet.
 
+Install prerequisites
+
+```bash
+sudo apt update
+sudo apt install python3-pip
+pip3 install RPi.GPIO
+```
+
 Clone the repository to your home directory and change into the directory;
 
 ```bash

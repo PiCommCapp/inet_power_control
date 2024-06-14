@@ -54,7 +54,7 @@ def reboot_sequence():
     time.sleep(300)  # Pause for 5 minutes
     
     GPIO.output(RELAY_PINS[2], GPIO.LOW)  # Turn on Network Switch (relay 3)
-    time.sleep(3600)  # Pause for 1 hour
+    time.sleep(1800)  # Pause for 1/2 hour
 
     if not internet_check():
         GPIO.output(RELAY_PINS, GPIO.LOW)  # Close all relays for manual intervention
