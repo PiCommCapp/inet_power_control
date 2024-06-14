@@ -3,8 +3,8 @@ Description=Reboot Devices Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /path/to/reboot_devices.py
-WorkingDirectory=/path/to/
+ExecStart=/usr/bin/python3 /opt/reboot_devices.py
+WorkingDirectory=/opt
 StandardOutput=inherit
 StandardError=inherit
 Restart=always
