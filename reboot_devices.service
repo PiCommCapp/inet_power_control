@@ -1,0 +1,14 @@
+[Unit]
+Description=Reboot Devices Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /path/to/reboot_devices.py
+WorkingDirectory=/path/to/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
