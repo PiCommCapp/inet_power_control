@@ -1,8 +1,18 @@
-# Internet Power Control 
+# Internet Power Control
 
 A Raspberry Pi based power control system to reboot devices automatically at internet loss. It can also be rebooted with a button.
 
 The RPi pings Google and Cloudflare and if both are down it initiates a reboot sequence.
+
+## Network
+
+The network being controlled as three devices that are critical to its functioning.
+
+1. Modem
+2. Router/Firewall
+3. Network Switch
+
+Thankfully all of them use 12vdc, in my case. This could easily be modified for other voltages, but thats on you!
 
 ## Hardware
 
@@ -14,7 +24,9 @@ The system has a RPi, a 4 relay daughter board, and a power supply as all my dev
 | 1       | 27   | 13  | Pull Down | WAN Modem         | Normally Closed |
 | 2       | 22   | 15  | Pull Down | LAN Router        | Normally Closed |
 | 3       | 23   | 16  | Pull Down | Network Switch    | Normally Closed |
-| 4       | 24   | 18  | Pull Down | not used          | Normally Closed |
+| 4       | 24   | 18  | Pull Down | Indicator LED     | Normally Closed |
+
+Button is connected to ground.
 
 ## Reboot Sequence
 
@@ -51,7 +63,7 @@ cd inet_power_control
 Then create a symlink for the service file and the script
 
 ```bash
-ln -s ./reboot_devices.py /bin/reboot_devices.py
+ln -s ./reboot_devices.py /usr/local/bin/reboot_devices.py
 ln -s ./reboot_device.service /etc/systemd/system/reboot_devices.service
 ```
 
