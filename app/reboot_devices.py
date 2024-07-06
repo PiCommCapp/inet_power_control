@@ -7,7 +7,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 
 # Configuration variables
-LOG_FILE = '/var/log/inet_power_control.log'
+LOG_FILE = '/home/server/log/inet_power_control.log'
 PING_COUNT = 15
 PING_THRESHOLD = 8
 CHECK_INTERVAL = 60  # seconds
