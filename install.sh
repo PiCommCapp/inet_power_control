@@ -19,9 +19,9 @@ sudo apt install -y python3-pip logrotate
 check_success
 
 # Install Python package
-echo "Installing Python packages..."
-pip3 install RPi.GPIO paho-mqtt
-check_success
+# echo "Installing Python packages..."
+# pip3 install RPi.GPIO paho-mqtt
+# check_success
 
 # Define app directory and filenames
 APP_DIR="$(pwd)/app"
