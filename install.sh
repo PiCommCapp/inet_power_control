@@ -15,12 +15,7 @@ check_success
 
 # Install required packages
 echo "Installing required packages..."
-sudo apt install -y python3-pip logrotate
-check_success
-
-# Install Python packages
-echo "Installing Python packages..."
-pip3 install RPi.GPIO paho-mqtt
+sudo apt install -y python3-pip python3-venv logrotate
 check_success
 
 # Define app directory and filenames
@@ -30,6 +25,20 @@ SERVICE_NAME="reboot_devices.service"
 LOGROTATE_CONF="inet_logrotate"
 LOG_DIR="/home/server/log"
 LOG_FILE="${LOG_DIR}/inet_power_control.log"
+VENV_DIR="${APP_DIR}/venv"
+
+# Create a virtual environment
+echo "Creating virtual environment..."
+python3 -m venv ${VENV_DIR}
+check_success
+
+# Activate the virtual environment and install Python packages
+echo "Activating virtual environment and installing Python packages..."
+source ${VENV_DIR}/bin/activate
+check_success
+pip install RPi.GPIO paho-mqtt
+check_success
+deactivate
 
 # Create log directory and set permissions
 echo "Creating log directory and setting permissions..."
