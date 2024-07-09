@@ -3,7 +3,7 @@
 # Function to check the last command's success and exit on failure
 check_success() {
     if [ $? -ne 0 ]; then
-        echo "Error occurred in previous command. Exiting."
+        echo "Error occurred in the previous command. Exiting."
         exit 1
     fi
 }
@@ -18,16 +18,26 @@ echo "Installing required packages..."
 sudo apt install -y python3-pip logrotate
 check_success
 
-# Install Python package
-# echo "Installing Python packages..."
-# pip3 install RPi.GPIO paho-mqtt
-# check_success
+# Install Python packages
+echo "Installing Python packages..."
+pip3 install RPi.GPIO paho-mqtt
+check_success
 
 # Define app directory and filenames
 APP_DIR="$(pwd)/app"
 SCRIPT_NAME="reboot_devices.py"
 SERVICE_NAME="reboot_devices.service"
 LOGROTATE_CONF="inet_logrotate"
+LOG_DIR="/home/server/log"
+LOG_FILE="${LOG_DIR}/inet_power_control.log"
+
+# Create log directory and set permissions
+echo "Creating log directory and setting permissions..."
+sudo mkdir -p ${LOG_DIR}
+sudo touch ${LOG_FILE}
+sudo chown server:server ${LOG_DIR}
+sudo chown server:server ${LOG_FILE}
+check_success
 
 # Create symlinks for the service file and the script
 echo "Creating symlinks for the service file and the script..."

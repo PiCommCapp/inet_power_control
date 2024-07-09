@@ -7,7 +7,8 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 
 # Configuration variables
-LOG_FILE = '/home/server/log/inet_power_control.log'
+LOG_DIR = "/home/server/log"
+LOG_FILE = os.path.join(LOG_DIR, "inet_power_control.log")
 PING_COUNT = 15
 PING_THRESHOLD = 8
 CHECK_INTERVAL = 60  # seconds
@@ -28,6 +29,16 @@ MQTT_TOPIC_CONTROL = 'inet_power_control/control'
 MQTT_CLIENT_ID = 'InetPowerControl'
 MQTT_USERNAME = 'your_username'
 MQTT_PASSWORD = 'your_password'
+
+# Create log directory if it doesn't exist
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+# Setup logging
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    filename=LOG_FILE,
+                    filemode='a')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filename=LOG_FILE, filemode='a')
