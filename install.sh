@@ -67,9 +67,14 @@ else
     echo "Logrotate configuration file not found. Skipping logrotate setup."
 fi
 
+# Make sure the setup script is executable
+echo "Making setup script executable..."
+chmod +x ${APP_DIR}/setup.py
+check_success
+
 # Run the setup script
 echo "Running setup script..."
-sudo python3 /usr/local/bin/setup.py
+sudo ${VENV_DIR}/bin/python3 /usr/local/bin/setup.py
 check_success
 
 # Create and start the services for manual reboot and monitoring
