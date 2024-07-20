@@ -1,41 +1,28 @@
-# monitor.py
-import subprocess
-import logging
 import time
-# Define the configuration file path
-config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'config.py')
-sys.path.append(os.path.dirname(config_path))
-import config
-from reboot import reboot_sequence
+import logging
+import os
+import RPi.GPIO as GPIO
+from config import LOG_FILE, RELAY_PINS, LED_PIN
 
-def ping(host):
-    response = subprocess.run(
-        ['ping', '-c', str(PING_COUNT), host],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    return response.returncode == 0, response.stdout.decode()
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filename=LOG_FILE, filemode='a')
+logger = logging.getLogger(__name__)
 
 def check_internet():
-    google_success, google_output = ping("8.8.8.8")
-    cloudflare_success, cloudflare_output = ping("1.1.1.1")
-    success_count = google_output.count('bytes from') + cloudflare_output.count('bytes from')
-    return success_count >= FAIL_THRESHOLD
+    logger.info("Checking internet connectivity...")
+    response1 = os.system("ping -c 15 8.8.8.8 > /dev/null 2>&1")
+    response2 = os.system("ping -c 15 1.1.1.1 > /dev/null 2>&1")
+    if response1 != 0 and response2 != 0:
+        logger.warning("Internet is down. Initiating reboot sequence...")
+        exec(open("/usr/local/bin/reboot.py").read())
+    else:
+        logger.info("Internet connectivity is OK.")
+
+def main():
+    logger.info("Starting internet monitoring script...")
+    while True:
+        check_internet()
+        time.sleep(900)
 
 if __name__ == "__main__":
-    fault_counter = 0
-    logging.info("Starting automatic monitoring")
-
-    while True:
-        if check_internet():
-            logging.info("Internet connection is up")
-            fault_counter = 0
-        else:
-            logging.warning("Internet connection is down")
-            fault_counter += 1
-
-            if fault_counter >= 2:
-                reboot_sequence()
-                fault_counter = 0
-
-        time.sleep(CHECK_INTERVAL)
+    main()

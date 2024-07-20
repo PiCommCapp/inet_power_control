@@ -1,4 +1,3 @@
-import os
 import logging
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
@@ -10,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 def setup_gpio():
     logger.info("Setting up GPIO pins...")
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button
     GPIO.setup(27, GPIO.OUT)  # Relay 1
