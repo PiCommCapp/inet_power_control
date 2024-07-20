@@ -42,7 +42,7 @@ check_success
 
 # Copy configuration file to parent directory
 # echo "Copying configuration file to parent directory..."
-# cp config.py ${HOME}/inet_power_control
+# cp ${APP_DIR}/config.py ${HOME}/inet_power_control/config.py
 # check_success
 
 # Create symlinks for the service file and the scripts
@@ -53,14 +53,15 @@ sudo ln -sf ${APP_DIR}/reboot.py /usr/local/bin/reboot.py
 sudo ln -sf ${APP_DIR}/monitor.py /usr/local/bin/monitor.py
 check_success
 
-# Configure log rotation
-echo "Configuring log rotation..."
-sudo ln -sf ${APP_DIR}/inet_logrotate /etc/logrotate.d/inet_power_control
-check_success
-
-# Set permissions for logrotate configuration
-sudo chmod 644 /etc/logrotate.d/inet_power_control
-check_success
+# Ensure the logrotate configuration file exists before creating the symlink
+echo "Checking and creating logrotate configuration..."
+if [ -f ${APP_DIR}/inet_logrotate ]; then
+    sudo ln -sf ${APP_DIR}/inet_logrotate /etc/logrotate.d/inet_power_control
+    sudo chmod 644 /etc/logrotate.d/inet_power_control
+    check_success
+else
+    echo "Logrotate configuration file not found. Skipping logrotate setup."
+fi
 
 # Run the setup script
 echo "Running setup script..."
@@ -132,3 +133,4 @@ else
 fi
 
 echo "Installation complete."
+
