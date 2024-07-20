@@ -41,9 +41,9 @@ touch ${LOG_FILE}
 check_success
 
 # Copy configuration file to parent directory
-echo "Copying configuration file to parent directory..."
-cp config.py ${HOME}/inet_power_control
-check_success
+# echo "Copying configuration file to parent directory..."
+# cp config.py ${HOME}/inet_power_control
+# check_success
 
 # Create symlinks for the service file and the scripts
 echo "Creating symlinks for the scripts..."
