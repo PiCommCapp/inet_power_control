@@ -15,5 +15,5 @@ MQTT_PORT = 1883
 MQTT_TOPIC = "inet_power_control/status"
 BUTTON_PIN = 17
 RELAY_PINS = [27, 22, 23, 24]
-INDICATOR_LED_PIN = 24
+LED_PIN = 24
 CHECK_INTERVAL = 900  # 15 minutes
