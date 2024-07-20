@@ -40,9 +40,13 @@ mkdir -p ${LOG_DIR}
 touch ${LOG_FILE}
 check_success
 
-# Copy configuration file to parent directory
-echo "Copying configuration file to parent directory..."
-cp ${HOME}/inet_power_control/config.py ${APP_DIR}/config.py
+# Remove existing config.py if it exists and copy the new config.py
+echo "Setting up configuration file..."
+if [ -f ${APP_DIR}/config.py ]; then
+    rm ${APP_DIR}/config.py
+    check_success
+fi
+cp ${APP_DIR}/../config.py ${APP_DIR}/config.py
 check_success
 
 # Create symlinks for the service file and the scripts
@@ -133,4 +137,3 @@ else
 fi
 
 echo "Installation complete."
-

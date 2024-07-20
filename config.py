@@ -9,7 +9,7 @@ TIME_BETWEEN_STEPS = {
     'router_restart': 300,
     'switch_restart': 3600
 }
-MQTT_ENABLED = false
+MQTT_ENABLED = False
 MQTT_BROKER = "mqtt_broker_address"
 MQTT_PORT = 1883
 MQTT_TOPIC = "inet_power_control/status"
